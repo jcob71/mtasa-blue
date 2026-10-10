@@ -35,11 +35,12 @@ jobs:
         run: Expand-Archive -Path utils/DXFiles.zip -DestinationPath utils/DXFiles
         shell: powershell
 
-      - name: Restore vs2022
+      - name: Restore VS2022 build tools
         run: |
-          git fetch origin 6ccea706e4b49f6bdb013b554cd8ac5bf4ed8a6c
-          git checkout 6ccea706e4b49f6bdb013b554cd8ac5bf4ed8a6c -- README.md
-          git revert 6ccea706e4b49f6bdb013b554cd8ac5bf4ed8a6c --no-commit
+          git fetch --no-tags origin 6112ac6409214012a95ea56ff1739940ee524798
+          git checkout 6112ac6409214012a95ea56ff1739940ee524798 -- premake5.lua utils/premake5.exe win-create-projects.bat
+          grep -q 'toolset "v143"' premake5.lua
+          grep -q 'vs2022' win-create-projects.bat
         shell: bash
 
       - name: Install CEF
